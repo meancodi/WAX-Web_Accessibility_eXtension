@@ -1,0 +1,10 @@
+{
+  "name": "WCAG Checker",
+  "description": "Checks websites for WCAG Guideline compatibility",
+  "version": "1.0",
+  "permissions": ["storage"],
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "main.html"
+  }
+}
