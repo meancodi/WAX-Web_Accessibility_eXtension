@@ -1,0 +1,32 @@
+{
+  "name": "WCAG Checker",
+  "description": "Checks websites for WCAG Guideline compatibility",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "manifest_version": 3,
+  "background":{
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "main.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["node_modules/axe-core/axe.min.js"],
+    "matches": ["<all_urls>"]
+  }]
+}
