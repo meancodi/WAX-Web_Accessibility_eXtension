@@ -1,0 +1,15 @@
+{
+    "name": "WCAG Accessibility Checker",
+    "version": "1.0",
+    "description": "Checks WCAG 2.0, 2.1, and 2.2 compliance using axe-core",
+    "manifest_version": 3,
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    "host_permissions": ["<all_urls>"],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
