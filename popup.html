@@ -1,10 +1,52 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Popup</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f7fa;
+            color: #333;
+            text-align: center;
+            width: 250px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #2c698d;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #5193b9;
+            color: black;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #1f4d66;
+        }
+    </style>
 </head>
 <body>
-    <h1>Popup</h1>
-    <p>This is a simple popup for the extension.</p>
+    <h1>WCAG Checker</h1>
     <button id="callApi">Check Guidelines</button>
+    <p id="status">Click the button below to analyze this page for accessibility issues.</p>
     <script src="popup.js"></script>
 </body>
+</html>
