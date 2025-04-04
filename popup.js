@@ -10,7 +10,7 @@ document.getElementById("callApi").addEventListener("click", () => {
         // });
         chrome.scripting.executeScript(
             {
-                target: { tabId: tabId, allFrames: true },
+                target: { tabId: tabId, allFrames: false },
                 files: ["axe.min.js", "content.js"]
             },
             (results) => {
