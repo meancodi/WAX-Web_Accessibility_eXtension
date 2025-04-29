@@ -1,0 +1,1 @@
+# WAX - Web Accesibility Extension
