@@ -1,7 +1,7 @@
 {
-    "name": "WCAG Accessibility Checker",
+    "name": "WAX - WCAG Accessibility eXtension",
     "version": "1.0",
-    "description": "Checks WCAG 2.0, 2.1, and 2.2 compliance using axe-core",
+    "description": "Checks WCAG 2.0, 2.1, and 2.2 compliance and provides suggestions for improvement.",
     "manifest_version": 3,
     "permissions": [
         "activeTab",

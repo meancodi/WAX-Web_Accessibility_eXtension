@@ -4,7 +4,6 @@ document.getElementById("callApi").addEventListener("click", () => {
         document.getElementById("status").innerText = "Checking.....";
         const tabId = tabs[0].id;
         
-        // First inject axe.min.js
         chrome.scripting.executeScript(
             {
                 target: { tabId: tabId, allFrames: false },
@@ -22,7 +21,7 @@ document.getElementById("callApi").addEventListener("click", () => {
                     return;
                 }
                 
-                // Then inject config.js
+                // First make sure the config is loaded fresh
                 chrome.scripting.executeScript(
                     {
                         target: { tabId: tabId, allFrames: false },
@@ -31,21 +30,21 @@ document.getElementById("callApi").addEventListener("click", () => {
                     () => {
                         if (chrome.runtime.lastError) {
                             console.error("config.js injection failed:", chrome.runtime.lastError.message);
-                            document.getElementById("status").innerText = "Script injection failed. Please try again.";
+                            document.getElementById("status").innerText = "Config script injection failed. Please try again.";
                             document.getElementById("callApi").disabled = false;
                             return;
                         }
                         
-                        // Finally inject content.js
+                        // Now inject the content script that will use the config
                         chrome.scripting.executeScript(
                             {
                                 target: { tabId: tabId, allFrames: false },
-                                files: ["content.js"]
+                                files: ["reportAndFix.js"]
                             },
                             (results) => {
                                 if (chrome.runtime.lastError) {
                                     console.error("content.js injection failed:", chrome.runtime.lastError.message);
-                                    document.getElementById("status").innerText = "Script injection failed. Please try again.";
+                                    document.getElementById("status").innerText = "Content script injection failed. Please try again.";
                                 } else {
                                     console.log("All scripts injected successfully");
                                     document.getElementById("status").innerText = "Results logged in console. Press F12 to view.";
@@ -69,7 +68,7 @@ document.getElementById("getReport").addEventListener("click", () => {
         chrome.scripting.executeScript(
             {
                 target: { tabId: tabId, allFrames: false },
-                files: ["axe.min.js", "contentwithoutfix.js"]
+                files: ["axe.min.js", "report.js"]
             },
             (results) => {
                 if (chrome.runtime.lastError) {
