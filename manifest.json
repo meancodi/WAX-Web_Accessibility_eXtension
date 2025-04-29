@@ -9,6 +9,12 @@
         "tabs"
     ],
     "host_permissions": ["<all_urls>"],
+    
+    "icons": {
+        "16": "./icons/xslogo.png",
+        "48": "./icons/llogo.png",
+        "128": "./icons/xllogo.png"
+    },
     "action": {
         "default_popup": "popup.html"
     }
