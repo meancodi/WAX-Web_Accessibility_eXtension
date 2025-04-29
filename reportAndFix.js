@@ -211,11 +211,12 @@ function getWcagVersion(ruleNumber) {
     return "Unknown";
 }
 
+
+
 function requestGeminiFixes(violationsData, originalViolations) {
     try {
         const API_KEY = CONFIG.API_KEY;
         const API_URL = `${CONFIG.API_URL}?key=${API_KEY}`;
-        
         
         let prompt = "As an accessibility expert, provide detailed fixes for each of these WCAG violations:\n\n";
         
@@ -227,24 +228,18 @@ function requestGeminiFixes(violationsData, originalViolations) {
             prompt += `Impact: ${violation.impact}\n`;
             prompt += `HTML: ${violation.html}\n\n`;
         });
-        
+
         prompt += "For each violation, provide your response in this exact format:\n";
         prompt += "VIOLATION_1:\n";
         prompt += "FIXED_HTML: [The complete corrected HTML with all necessary attributes]\n";
         prompt += "CHANGES_MADE: [Specific changes made to fix the violation - clearly highlight ORIGINAL vs NEW attributes]\n\n";
-        prompt += "VIOLATION_2:\n";
-        prompt += "FIXED_HTML: [The complete corrected HTML with all necessary attributes]\n";
-        prompt += "CHANGES_MADE: [Specific changes made to fix the violation - clearly highlight ORIGINAL vs NEW attributes]\n\n";
-        prompt += "And so on for each violation. Be specific about which attributes or elements were modified. Use the format 'ORIGINAL: [old value] → NEW: [new value]' when describing attribute changes.";
-        prompt += "If a violation requires complex changes beyond simple HTML attribute fixes, please provide specific guidance about what needs to be changed instead of just 'No specific fix suggested'.";
-        
+        prompt += "And so on for each violation. Use the format 'ORIGINAL: [old value] → NEW: [new value]' when describing attribute changes.";
+
         const requestBody = {
             contents: [
                 {
                     parts: [
-                        {
-                            text: prompt
-                        }
+                        { text: prompt }
                     ]
                 }
             ],
@@ -255,10 +250,14 @@ function requestGeminiFixes(violationsData, originalViolations) {
                 maxOutputTokens: 8192
             }
         };
-        
+
         console.log("%c Generating Accessibility Fixes", "background: #2196F3; padding: 10px 100px; color: white;");
-        
-        const makeApiRequest = (retryCount = 0) => {
+
+        const dotInterval = setInterval(() => {
+            console.log(' seconds...');
+        }, 1000);
+
+        const makeApiRequest = () => {
             return fetch(API_URL, {
                 method: "POST",
                 headers: {
@@ -267,9 +266,9 @@ function requestGeminiFixes(violationsData, originalViolations) {
                 body: JSON.stringify(requestBody)
             })
             .then(response => {
+                clearInterval(dotInterval); // Stop dot logging on response
                 if (!response.ok) {
                     console.error(`API request failed with status: ${response.status}`);
-                    
                     return response.text().then(errorText => {
                         console.error("Error details:", errorText);
                         throw new Error(`API request failed with status: ${response.status}`);
@@ -278,16 +277,15 @@ function requestGeminiFixes(violationsData, originalViolations) {
                 return response.json();
             })
             .then(data => {
-                
                 let aiResponse;
-                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
                     aiResponse = data.candidates[0].content.parts[0].text;
                 } else if (data.text) {
                     aiResponse = data.text;
                 } else if (data.response) {
                     aiResponse = data.response;
                 }
-                
+
                 if (aiResponse) {
                     displayViolationsWithFixes(violationsData, aiResponse);
                 } else {
@@ -297,31 +295,29 @@ function requestGeminiFixes(violationsData, originalViolations) {
                 }
             })
             .catch(error => {
+                clearInterval(dotInterval); // Stop dot logging on error
                 console.error("Error calling Gemini API:", error);
-                
-                if (retryCount < 2) {
-                    console.log(`Retrying API call (${retryCount + 1}/2)...`);
-                    setTimeout(() => makeApiRequest(retryCount + 1), 1000);
-                } else {
+
                     console.log("%c API Error", "background: #f44336; color: white; padding: 10px;", 
-                        "The accessibility fixes could not be loaded. This might be due to:\n" +
+                        "\nThe accessibility fixes could not be loaded. This might be due to:\n" +
                         "1. Invalid or expired API key\n" +
                         "2. Network connectivity issues\n" +
                         "3. Gemini API service disruption\n\n" +
                         "Please check your API key in config.js and try again."
                     );
-                    
+
                     displayViolationsWithoutFixes(violationsData);
-                }
+                
             });
         };
-        
+
         makeApiRequest();
     } catch (error) {
         console.error("Error setting up Gemini API request:", error);
         displayViolationsWithoutFixes(violationsData);
     }
 }
+
 
 function displayViolationsWithoutFixes(violationsData) {
     console.log("%c Violations (No Fixes Available)", "background: #FF9800; color: white; padding: 10px 100px;");
