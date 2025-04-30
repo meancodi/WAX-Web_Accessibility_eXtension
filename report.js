@@ -1,29 +1,43 @@
 if (typeof axe !== "undefined") {
     axe.run(document).then(results => {
-        console.log("Results", results);
         
+        
+
+        console.log("%c Not Relevant", "background:rgb(71, 71, 71); padding: 10px 100px; color: white;");
+        console.log(`Found ${results.inapplicable.length} rules irrevelant to this page`);
+        results.inapplicable.forEach(pass => {
+            console.log(`Pass: ${pass.description}`);
+            console.log(`Tags: ${pass.tags.join(', ')}`);
+            console.log("---------");
+        });
+
+
         // First, log non-WCAG items
         console.log("%c Non-WCAG Items", "background: #8a8a8a; padding: 10px 100px; color: white;");
         const nonWcagPasses = results.passes.filter(pass => !pass.tags.some(tag => tag.startsWith('wcag')));
         const nonWcagViolations = results.violations.filter(violation => !violation.tags.some(tag => tag.startsWith('wcag')));
         const nonWcagIncomplete = results.incomplete.filter(incomplete => !incomplete.tags.some(tag => tag.startsWith('wcag')));
         
+        
         console.log(`Found ${nonWcagPasses.length} non-WCAG passes`);
         nonWcagPasses.forEach(pass => {
             console.log(`Pass: ${pass.description}`);
             console.log(`Tags: ${pass.tags.join(', ')}`);
+            console.log("---------");
         });
         
         console.log(`Found ${nonWcagViolations.length} non-WCAG violations`);
         nonWcagViolations.forEach(violation => {
             console.log(`Violation: ${violation.description}`);
             console.log(`Tags: ${violation.tags.join(', ')}`);
+            console.log("---------");
         });
         
         console.log(`Found ${nonWcagIncomplete.length} non-WCAG items requiring manual check`);
         nonWcagIncomplete.forEach(incomplete => {
             console.log(`Incomplete: ${incomplete.description}`);
             console.log(`Tags: ${incomplete.tags.join(', ')}`);
+            console.log("---------");
         });
         
         // Log WCAG passes

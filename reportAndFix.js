@@ -7,6 +7,14 @@ if (typeof axe !== "undefined") {
         const nonWcagViolations = results.violations.filter(violation => !violation.tags.some(tag => tag.startsWith('wcag')));
         const nonWcagIncomplete = results.incomplete.filter(incomplete => !incomplete.tags.some(tag => tag.startsWith('wcag')));
 
+        console.log("%c Not Relevant", "background:rgb(71, 71, 71); padding: 10px 100px; color: white;");
+        console.log(`Found ${results.inapplicable.length} rules irrevelant to this page`);
+        results.inapplicable.forEach(pass => {
+            console.log(`Pass: ${pass.description}`);
+            console.log(`Tags: ${pass.tags.join(', ')}`);
+            console.log("---------");
+        });
+
         console.log("%c Non-WCAG Passes", "background:rgb(162, 220, 135); padding: 10px 100px; color: white;");
         console.log(`Found ${nonWcagPasses.length} non-WCAG passes`);
         nonWcagPasses.forEach(pass => {
