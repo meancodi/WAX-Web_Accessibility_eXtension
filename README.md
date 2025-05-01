@@ -2,9 +2,6 @@
 
 A Chrome extension that performs comprehensive accessibility audits using axe-core and provides AI-powered fix suggestions using Google's Gemini API.
 
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)
-
 ## 🌟 Features
 
 - **One-Click Accessibility Audit**: Run comprehensive accessibility checks on any webpage with a single click
@@ -21,10 +18,6 @@ A Chrome extension that performs comprehensive accessibility audits using axe-co
 
 ## 🔧 Installation
 
-### From Chrome Web Store
-*(Coming soon)*
-
-### Manual Installation
 1. Clone this repository or download it as a ZIP file
    ```
    git clone https://github.com/yourusername/web-accessibility-checker.git
@@ -34,7 +27,7 @@ A Chrome extension that performs comprehensive accessibility audits using axe-co
 4. Click "Load unpacked" and select the directory containing the extension files
 5. Add your Gemini API key to `config.js`
 
-## 🚀 Usage
+## Usage
 
 1. Navigate to any webpage you want to check
 2. Click on the extension icon in your Chrome toolbar
@@ -42,7 +35,7 @@ A Chrome extension that performs comprehensive accessibility audits using axe-co
    - **Run Accessibility Check**: Scans the page and provides a report with AI-powered fix suggestions
    - **Get WCAG Report Only**: Scans the page and provides a detailed report without fix suggestions
 
-## 📊 Understanding the Results
+## Understanding the Results
 
 The extension organizes results into several categories:
 
@@ -63,7 +56,7 @@ Items that require human judgment to determine if they meet accessibility standa
 ### Non-WCAG Items
 Additional best practices that don't directly map to WCAG criteria but are still important for accessibility.
 
-## ⚙️ Configuration
+## Configuration
 
 Edit the `config.js` file to add your Google Gemini API key:
 
@@ -74,7 +67,7 @@ const CONFIG = {
 };
 ```
 
-## 🛠️ Technical Details
+## Technical Details
 
 This extension uses:
 - **axe-core**: The leading accessibility testing library for websites
@@ -83,23 +76,12 @@ This extension uses:
 
 The extension injects scripts into the current page to analyze the DOM and report accessibility issues using the axe-core library. When AI fixes are requested, it processes the violations and sends them to the Gemini API for analysis and fix suggestions.
 
-## 🤝 Contributing
 
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Make your changes
-4. Run any tests/linters
-5. Commit your changes (`git commit -m 'Add new feature'`)
-6. Push to the branch (`git push origin feature-branch`)
-7. Open a Pull Request
-
-## 📚 Documentation
+## Documentation
 
 For more details on the WCAG rules being tested, refer to the `WAX-ruleset-documentation.md` file included in this repository.
 
-## ⚠️ Privacy Notice
+## Privacy Notice
 
 This extension:
 - Does not collect or store any user data
@@ -107,11 +89,8 @@ This extension:
 - Does not track user behavior or browsing history
 - Works entirely client-side except for API calls to Google Gemini
 
-## 📜 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - [Deque Labs](https://github.com/dequelabs) for the axe-core library
 - Google for the Gemini API
