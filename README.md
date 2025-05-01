@@ -16,7 +16,7 @@ A Chrome extension that performs comprehensive accessibility audits using axe-co
 - Google Chrome browser (version 88 or higher)
 - A Google API key for the Gemini API (for AI-powered fix suggestions)
 
-## 🔧 Installation
+## Installation
 
 1. Clone this repository or download it as a ZIP file
    ```
@@ -25,7 +25,18 @@ A Chrome extension that performs comprehensive accessibility audits using axe-co
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" in the top-right corner
 4. Click "Load unpacked" and select the directory containing the extension files
-5. Add your Gemini API key to `config.js`
+5. Add your Gemini API key to `config.js` 
+
+## Configuration
+
+Edit the `config.js` file to add your Google Gemini API key:
+
+```javascript
+const CONFIG = {
+    API_KEY: "YOUR_GEMINI_API_KEY", 
+    API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+};
+```
 
 ## Usage
 
@@ -56,17 +67,6 @@ Items that require human judgment to determine if they meet accessibility standa
 ### Non-WCAG Items
 Additional best practices that don't directly map to WCAG criteria but are still important for accessibility.
 
-## Configuration
-
-Edit the `config.js` file to add your Google Gemini API key:
-
-```javascript
-const CONFIG = {
-    API_KEY: "YOUR_GEMINI_API_KEY", 
-    API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
-};
-```
-
 ## Technical Details
 
 This extension uses:
@@ -75,7 +75,6 @@ This extension uses:
 - **Chrome Extensions API**: For browser integration and DOM manipulation
 
 The extension injects scripts into the current page to analyze the DOM and report accessibility issues using the axe-core library. When AI fixes are requested, it processes the violations and sends them to the Gemini API for analysis and fix suggestions.
-
 
 ## Documentation
 
